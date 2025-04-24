@@ -1,15 +1,21 @@
-import express from "express"; 
-import morgan from "morgan";
-import cors from "cors";
-import enrutadorUsuarios from "./routes/usuario.routes.js";
+import express from 'express';
 
-const servidor = express();
-servidor.use (cors);
-servidor.use(morgan("dev"));
-servidor.use(express.json());
-servidor.use('/usuarios',enrutadorUsuarios);
-servidor.get('/', (solicitud,respuesta)=>{
-    respuesta.status(404).send("noencontrado");
+// Importar las rutas
+import productoRoutes from './routes/producto.routed.js';
+import usuarioRoutes from './routes/usuario.routes.js'; // si ya lo tienes configurado
+
+const app = express();
+
+// Middlewares
+app.use(express.json());
+
+// Rutas
+app.use('/api/productos', productoRoutes);
+app.use('/api/usuarios', usuarioRoutes); // opcional
+
+// Ruta base (opcional)
+app.get('/', (req, res) => {
+  res.send('API funcionando 🚀');
 });
 
-export default servidor;
+export default app;
